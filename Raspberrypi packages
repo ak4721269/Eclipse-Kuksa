@@ -1,0 +1,476 @@
+
+akash@akash-HP-Pavilion-15-Notebook-PC:~$ ssh root@192.168.0.102
+root@raspberrypi3:~# mkdir tmp
+root@raspberrypi3:~# dpkg-deb -R original.deb tmp
+dpkg-deb: error: failed to read archive 'original.deb': No such file or directory
+root@raspberrypi3:~# dpkg-deb -R apt.deb tmp
+root@raspberrypi3:~# #edit DEBIAN/postinst
+root@raspberrypi3:~# dpkg-deb -b tmp fixed.deb
+dpkg-deb: building package 'apt' in 'fixed.deb'.
+tar: unrecognized option '--format=gnu'
+BusyBox v1.24.1 (2018-05-23 03:24:16 IST) multi-call binary.
+
+Usage: tar -[cxtZzJjahmvO] [-X FILE] [-T FILE] [-f TARFILE] [-C DIR] [FILE]...
+dpkg-deb: error: subprocess tar -cf returned error exit status 1
+root@raspberrypi3:~# cd tmp
+root@raspberrypi3:~/tmp# ar p ../apt.deb control.tar.gz | tar -xz
+root@raspberrypi3:~/tmp# # edit postinst
+root@raspberrypi3:~/tmp# cp ../apt.deb ../fixed.deb
+root@raspberrypi3:~/tmp# tar czf control.tar.gz *[!z]
+root@raspberrypi3:~/tmp# ar r ../fixed.deb control.tar.gz
+root@raspberrypi3:~/tmp# apt-get install git
+-sh: apt-get: command not found
+root@raspberrypi3:~/tmp# ls    
+DEBIAN	   control	   etc	    postinst  shlibs  var
+conffiles  control.tar.gz  md5sums  postrm    usr
+root@raspberrypi3:~/tmp# cd ..
+root@raspberrypi3:~# apt-get
+-sh: apt-get: command not found
+root@raspberrypi3:~# apt install
+-sh: apt: command not found
+root@raspberrypi3:~# dpkg --install git
+dpkg: error: failed to open package info file '/var/lib/dpkg/status' for reading: No such file or directory
+root@raspberrypi3:~# curl -O http://github-media-downloads.s3.amazonaws.com/osx/git-credential-osxkeychain
+-sh: curl: command not found
+root@raspberrypi3:~# wget http://github-media-downloads.s3.amazonaws.com/osx/git-credential-osxkeychain
+Connecting to github-media-downloads.s3.amazonaws.com (52.216.162.11:80)
+git-credential-osxke 100% |*******************************| 15520   0:00:00 ETA
+root@raspberrypi3:~# mv git-credential-osxkeychain /usr/local/bin
+mv: cannot move 'git-credential-osxkeychain' to '/usr/local/bin': No such file or directory
+root@raspberrypi3:~# ls
+apt.deb  fixed.deb  git-credential-osxkeychain	tmp
+root@raspberrypi3:~# cd ..
+root@raspberrypi3:/home# cd ..
+root@raspberrypi3:/# mv git-credential-osxkeychain /usr/local/bin
+mv: cannot stat 'git-credential-osxkeychain': No such file or directory
+root@raspberrypi3:/# wget http://github-media-downloads.s3.amazonaws.com/osx/git-credential-osxkeychain
+Connecting to github-media-downloads.s3.amazonaws.com (54.231.32.83:80)
+git-credential-osxke 100% |*******************************| 15520   0:00:00 ETA
+root@raspberrypi3:/# mv git-credential-osxkeychain /usr/local/binmv: cannot move 'git-credential-osxkeychain' to '/usr/local/bin': No such file or directory
+root@raspberrypi3:/# ls
+bin   dev  git-credential-osxkeychain  lib	   media  proc	sbin  sys  usr
+boot  etc  home			       lost+found  mnt	  run	srv   tmp  var
+root@raspberrypi3:/# cd usr
+root@raspberrypi3:/usr# ls
+arm-poky-linux-gnueabi	bin  games  include  lib  libexec  sbin  share	src
+root@raspberrypi3:/usr# mv git-credential-osxkeychain /usr/bin      mv: cannot stat 'git-credential-osxkeychain': No such file or directory
+root@raspberrypi3:/usr# cd ..                                 
+root@raspberrypi3:/# ls
+bin   dev  git-credential-osxkeychain  lib	   media  proc	sbin  sys  usr
+boot  etc  home			       lost+found  mnt	  run	srv   tmp  var
+root@raspberrypi3:/# mv git-credential-osxkeychain /usr/bin
+root@raspberrypi3:/# chmod u+x /usr/bin/git-credential-osxkeychain
+root@raspberrypi3:/# git config --global credential.helper osxkeychain
+-sh: git: command not found
+root@raspberrypi3:/# cd usr
+root@raspberrypi3:/usr# cd bin
+root@raspberrypi3:/usr/bin# ls
+'['				    lttng
+'[['				    lttng-crash
+aclocal				    lttng-relayd
+aclocal-1.15			    lttng-sessiond
+addr2line			    lzcat
+ar				    lzcmp
+arch				    lzdiff
+arch.coreutils			    lzegrep
+arm-poky-linux-gnueabi-addr2line    lzfgrep
+arm-poky-linux-gnueabi-ar	    lzgrep
+arm-poky-linux-gnueabi-as	    lzless
+arm-poky-linux-gnueabi-c++filt	    lzma
+arm-poky-linux-gnueabi-cpp	    lzmadec
+arm-poky-linux-gnueabi-dwp	    lzmainfo
+arm-poky-linux-gnueabi-elfedit	    lzmore
+arm-poky-linux-gnueabi-g++	    m4
+arm-poky-linux-gnueabi-gcc	    make
+arm-poky-linux-gnueabi-gcc-ar	    makedb
+arm-poky-linux-gnueabi-gcc-nm	    mapscrn
+arm-poky-linux-gnueabi-gcc-ranlib   md5sum
+arm-poky-linux-gnueabi-gprof	    md5sum.coreutils
+arm-poky-linux-gnueabi-ld	    mesg
+arm-poky-linux-gnueabi-ld.bfd	    mesg.util-linux
+arm-poky-linux-gnueabi-ld.gold	    microcom
+arm-poky-linux-gnueabi-nm	    mkfifo
+arm-poky-linux-gnueabi-objcopy	    mkfifo.coreutils
+arm-poky-linux-gnueabi-objdump	    mktemp.coreutils
+arm-poky-linux-gnueabi-pkg-config   ms_print
+arm-poky-linux-gnueabi-ranlib	    msgattrib
+arm-poky-linux-gnueabi-readelf	    msgcat
+arm-poky-linux-gnueabi-size	    msgcmp
+arm-poky-linux-gnueabi-strings	    msgcomm
+arm-poky-linux-gnueabi-strip	    msgconv
+as				    msgen
+autoconf			    msgexec
+autoheader			    msgfilter
+autom4te			    msgfmt
+automake			    msggrep
+automake-1.15			    msginit
+autopoint			    msgmerge
+autoreconf			    msgunfmt
+autoscan			    msguniq
+autoupdate			    mtrace
+awk				    namei
+babeltrace			    nc
+babeltrace-log			    newgidmap
+base32				    newgrp
+base64.coreutils		    newgrp.shadow
+basename			    newuidmap
+basename.coreutils		    nice
+bashbug				    nice.coreutils
+blkiomon			    nl
+blkparse			    nl.coreutils
+blkrawverify			    nm
+blktrace			    nohup
+bno_plot.py			    nohup.coreutils
+btrace				    nproc
+btrecord			    nproc.coreutils
+btreplay			    nsenter
+btt				    nslookup
+bunzip2				    numfmt
+bunzip2.bzip2			    objcopy
+busctl				    objdump
+bzcat				    od
+bzcat.bzip2			    od.coreutils
+bzcmp				    openssl
+bzdiff				    openvt
+bzegrep				    openvt.kbd
+bzfgrep				    passwd
+bzgrep				    passwd.shadow
+bzip2				    paste
+bzip2recover			    paste.coreutils
+bzless				    patch
+bzmore				    patch.patch
+c++				    pathchk
+c++filt				    pathchk.coreutils
+c_rehash			    pcprofiledump
+cal				    perf
+callgrind_annotate		    perl
+callgrind_control		    perl5.22.1
+cc				    pg
+ccache				    pinky
+cg_annotate			    pinky.coreutils
+cg_diff				    pkg-config
+cg_merge			    pldd
+chage				    pr
+chcon				    pr.coreutils
+chcon.coreutils			    printenv
+chfn				    printenv.coreutils
+chfn.shadow			    printf
+chrt				    printf.coreutils
+chrt.util-linux			    prlimit
+chsh				    psfaddtable
+chsh.shadow			    psfgettable
+chvt				    psfstriptable
+chvt.kbd			    psfxtable
+cksum				    psplash
+cksum.coreutils			    psplash-default
+clear				    psplash-raspberrypi
+cmp				    psplash-write
+cmp.diffutils			    ptx
+col				    ptx.coreutils
+colcrt				    python
+colrm				    python-config
+column				    python2
+comm				    python2-config
+comm.coreutils			    python2.7
+cpp				    python2.7-config
+crossscripts			    quilt
+csplit				    ranlib
+csplit.coreutils		    readelf
+cut				    readlink
+cut.coreutils			    readlink.coreutils
+dbclient			    realpath
+dbus-cleanup-sockets		    realpath.coreutils
+dbus-daemon			    recode-sr-latin
+dbus-launch			    rename
+dbus-monitor			    renice
+dbus-run-session		    renice.util-linux
+dbus-send			    reset
+dbus-update-activation-environment  resize
+dbus-uuidgen			    rev
+dc				    rpcgen
+deallocvt			    rpm
+deallocvt.kbd			    rpmconstant
+df.coreutils			    runcon
+diff				    runcon.coreutils
+diff.diffutils			    scp
+diff3				    script
+diffstat			    scriptreplay
+dir				    sdiff
+dir.coreutils			    seq
+dircolors			    seq.coreutils
+dircolors.coreutils		    setarch
+dirname				    setfont
+dirname.coreutils		    setkeycodes
+dpkg				    setleds
+dpkg-architecture		    setmetamode
+dpkg-buildflags			    setsid
+dpkg-buildpackage		    setsid.util-linux
+dpkg-checkbuilddeps		    setterm
+dpkg-deb			    setvtrgb
+dpkg-distaddfile		    sg
+dpkg-divert			    sha1sum
+dpkg-genchanges			    sha1sum.coreutils
+dpkg-gencontrol			    sha224sum
+dpkg-gensymbols			    sha224sum.coreutils
+dpkg-maintscript-helper		    sha256sum
+dpkg-mergechangelogs		    sha256sum.coreutils
+dpkg-name			    sha384sum
+dpkg-parsechangelog		    sha384sum.coreutils
+dpkg-query			    sha512sum
+dpkg-scanpackages		    sha512sum.coreutils
+dpkg-scansources		    showconsolefont
+dpkg-shlibdeps			    showkey
+dpkg-source			    shred
+dpkg-split			    shred.coreutils
+dpkg-statoverride		    shuf
+dpkg-trigger			    shuf.coreutils
+dpkg-vendor			    size
+dtrace				    slsh
+du				    smart
+du.coreutils			    sort
+dumpkeys			    sort.coreutils
+dumpleases			    split
+dwp				    split.coreutils
+eject				    sprof
+eject.util-linux		    ssh
+elfedit				    stap
+env				    stap-merge
+env.coreutils			    stap-report
+eu-ar				    staprun
+eu-elfcmp			    stapsh
+eu-elflint			    stdbuf
+eu-findtextrel			    stdbuf.coreutils
+eu-make-debug-archive		    strace
+eu-ranlib			    strace-log-merge
+eu-stack			    strings
+eu-strings			    strip
+eu-unstrip			    sum
+expand				    sum.coreutils
+expand.coreutils		    systemd-analyze
+expiry				    systemd-cat
+expr				    systemd-cgls
+expr.coreutils			    systemd-cgtop
+factor				    systemd-delta
+factor.coreutils		    systemd-detect-virt
+faillog				    systemd-nspawn
+fallocate			    systemd-path
+fgconsole			    systemd-run
+fgconsole.kbd			    systemd-socket-activate
+file				    systemd-stdio-bridge
+find				    tac
+find.findutils			    tac.coreutils
+findmnt				    tail
+flock				    tail.coreutils
+flock.util-linux		    tailf
+fmt				    taskset
+fmt.coreutils			    tclsh
+fold				    tclsh8.6
+fold.coreutils			    tclsh8.6.4
+free				    tee
+fuser				    tee.coreutils
+g++				    telnet
+gcc				    test
+gcore				    test.coreutils
+gdb				    tftp
+gdbserver			    time
+gencat				    timedatectl
+getconf				    timeout
+getent				    timeout.coreutils
+getkeycodes			    top
+gettextize			    tr
+git-credential-osxkeychain	    tr.coreutils
+gnu-configize			    trace
+gpasswd				    trace-cmd
+gprof				    traceroute
+groups				    truncate
+groups.coreutils		    truncate.coreutils
+groups.shadow			    tsort
+head				    tsort.coreutils
+head.coreutils			    tty
+hexdump				    tty.coreutils
+hexdump.util-linux		    ul
+hostid				    uname26
+hostid.coreutils		    unexpand
+hostnamectl			    unexpand.coreutils
+iconv				    unicode_start
+id				    unicode_stop
+id.coreutils			    uniq
+ifnames				    uniq.coreutils
+install				    unlink
+install.coreutils		    unlink.coreutils
+intltool-extract		    unlzma
+intltool-merge			    unshare
+intltool-prepare		    unxz
+intltool-update			    unzip
+intltoolize			    update-alternatives
+ionice				    updatedb
+iowatcher			    uptime
+ipcmk				    uptime.coreutils
+ipcrm				    users
+ipcs				    users.coreutils
+isosize				    utmpdump
+join				    utmpdump.util-linux
+join.coreutils			    valgrind
+kbd_mode			    valgrind-di-server
+kbdinfo				    valgrind-listener
+kbdrate				    vdir
+killall				    vdir.coreutils
+last				    verify_blkparse
+last.util-linux			    vgdb
+lastb				    vlock
+lastb.util-linux		    wall
+lastlog				    wall.util-linux
+lbracket.coreutils		    wc
+ld				    wc.coreutils
+ld.bfd				    wdctl
+ld.gold				    wget
+ldd				    whereis
+less				    which
+less.less			    who
+lessecho			    who.coreutils
+lesskey				    whoami
+libtool				    whoami.coreutils
+libtoolize			    write
+link				    xargs
+link.coreutils			    xargs.findutils
+linux32				    xgettext
+linux64				    xmlcatalog
+loadkeys			    xmllint
+loadunimap			    xz
+locale				    xzcat
+localectl			    xzcmp
+locate				    xzdec
+logger				    xzdiff
+logger.util-linux		    xzegrep
+logname				    xzfgrep
+logname.coreutils		    xzgrep
+look				    xzless
+lsblk				    xzmore
+lsipc				    yes
+lslocks				    yes.coreutils
+lslogins
+root@raspberrypi3:/usr/bin# cd ..
+root@raspberrypi3:/usr# cd ..
+root@raspberrypi3:/# cd ..
+root@raspberrypi3:/# cd home
+root@raspberrypi3:/home# cd root
+root@raspberrypi3:~# git config --global credential.helper osxkeychain
+-sh: git: command not found
+root@raspberrypi3:~#  git clone https://github.com/git/git.git
+-sh: git: command not found
+root@raspberrypi3:~# 
+root@raspberrypi3:~# intltool-extract apt.deb
+Generating C format header file for translation.
+Wrote apt.deb.h
+root@raspberrypi3:~# 
+root@raspberrypi3:~# wget --no-check-certificate --content-disposition https://github.com/joyent/node/tarball/v0.7.1
+wget: unrecognized option '--content-disposition'
+BusyBox v1.24.1 (2018-05-23 03:24:16 IST) multi-call binary.
+
+Usage: wget [-c|--continue] [-s|--spider] [-q|--quiet] [-O|--output-document FILE]
+	[--header 'header: value'] [-Y|--proxy on/off] [-P DIR]
+	[-U|--user-agent AGENT] [-T SEC] URL...
+root@raspberrypi3:~# wget --no-check-certificate -q https://github.com/joyent/node/tarball/v0.7.1
+wget: error getting response: No such file or directory
+root@raspberrypi3:~# wget -r --tries=10 http://fly.srk.fer.hr/ -o log
+wget: invalid option -- 'r'
+BusyBox v1.24.1 (2018-05-23 03:24:16 IST) multi-call binary.
+
+Usage: wget [-c|--continue] [-s|--spider] [-q|--quiet] [-O|--output-document FILE]
+	[--header 'header: value'] [-Y|--proxy on/off] [-P DIR]
+	[-U|--user-agent AGENT] [-T SEC] URL...
+root@raspberrypi3:~# wget  https://github.com/joyent/node/tarball/v0.7.1Connecting to github.com (192.30.253.112:443)
+wget: error getting response: No such file or directory
+root@raspberrypi3:~# ls
+apt.deb  apt.deb.h  fixed.deb  git-credential-osxkeychain  tmp
+root@raspberrypi3:~# cd ..
+root@raspberrypi3:/home# cd ..
+root@raspberrypi3:/# wget  https://github.com/joyent/node/tarball/v0.7.1
+Connecting to github.com (192.30.253.112:443)
+wget: error getting response: No such file or directory
+root@raspberrypi3:/# wget  https://github.com/joyent/node/tarball/v0.7.1
+Connecting to github.com (192.30.253.113:443)
+wget: error getting response: No such file or directory
+root@raspberrypi3:/#  strings /bin/tar | grep -i version
+module has wrong symbol version
+1) software that runs at boot time (e.g., old versions of LILO)
+Setting up swapspace version 1, size = %llu bytes
+setting version on %s
+--version
+This is not GNU sed version 4.0
+bad byte count for conversion character %s
+bad conversion character %%%s
+byte count with multiple conversion characters
+rkernel-version
+.gnu.version
+.gnu.version_r
+root@raspberrypi3:/# cd home
+root@raspberrypi3:/home# cd root
+root@raspberrypi3:~#  strings /bin/tar | grep -i version
+module has wrong symbol version
+1) software that runs at boot time (e.g., old versions of LILO)
+Setting up swapspace version 1, size = %llu bytes
+setting version on %s
+--version
+This is not GNU sed version 4.0
+bad byte count for conversion character %s
+bad conversion character %%%s
+byte count with multiple conversion characters
+rkernel-version
+.gnu.version
+.gnu.version_r
+root@raspberrypi3:~# cd ..
+root@raspberrypi3:/home# cd ..
+root@raspberrypi3:/# ls
+bin   dev  home  lost+found  mnt   run	 srv  tmp  var
+boot  etc  lib	 media	     proc  sbin  sys  usr
+root@raspberrypi3:/# cd bin
+root@raspberrypi3:/bin# ls
+ash		  kill			 sed
+base64		  kill.coreutils	 sh
+bash		  kill.util-linux	 sleep
+busybox		  kmod			 sleep.coreutils
+busybox.nosuid	  ln			 stat
+busybox.suid	  ln.coreutils		 stat.coreutils
+cat		  login			 stty
+cat.coreutils	  login.shadow		 stty.coreutils
+chattr		  loginctl		 su
+chgrp		  ls			 su.shadow
+chgrp.coreutils   ls.coreutils		 sync
+chmod		  lsmod			 sync.coreutils
+chmod.coreutils   lsmod.kmod		 systemctl
+chown		  machinectl		 systemd-ask-password
+chown.coreutils   mkdir			 systemd-escape
+cp		  mkdir.coreutils	 systemd-firstboot
+cp.coreutils	  mknod			 systemd-hwdb
+cpio		  mknod.coreutils	 systemd-inhibit
+date		  mktemp		 systemd-machine-id-setup
+date.coreutils	  more			 systemd-notify
+dd		  more.util-linux	 systemd-sysusers
+dd.coreutils	  mount			 systemd-tmpfiles
+df		  mount.util-linux	 systemd-tty-ask-password-agent
+dmesg		  mountpoint		 tar
+dmesg.util-linux  mountpoint.util-linux  touch
+dnsdomainname	  mv			 touch.coreutils
+dumpkmap	  mv.coreutils		 true
+echo		  netstat		 true.coreutils
+echo.coreutils	  pidof			 udevadm
+egrep		  ping			 umount
+false		  ping6			 umount.util-linux
+false.coreutils   ps			 uname
+fgrep		  pwd			 uname.coreutils
+getopt		  pwd.coreutils		 usleep
+grep		  rm			 vi
+gunzip		  rm.coreutils		 watch
+gzip		  rmdir			 zcat
+hostname	  rmdir.coreutils
+journalctl	  run-parts
+root@raspberrypi3:/bin# cd tar
+-sh: cd: tar: Not a directory
+root@raspberrypi3:/bin# vi tar
+root@raspberrypi3:/bin# cd ,,
+-sh: cd: ,,: No such file or directory
+root@raspberrypi3:/bin# cd ..
+root@raspberrypi3:/# dnf install git
+-sh: dnf: command not found
+root@raspberrypi3:/#    
