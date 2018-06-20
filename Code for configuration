@@ -1,0 +1,124 @@
+akash@akash-HP-Pavilion-15-Notebook-PC:~$ mkdir -p ~/rpi/sources
+akash@akash-HP-Pavilion-15-Notebook-PC:~$ cd ~/rpi/sources
+akash@akash-HP-Pavilion-15-Notebook-PC:~/rpi/sources$ git clone -b krogoth git://git.yoctoproject.org/poky
+Cloning into 'poky'...
+remote: Counting objects: 402668, done.
+remote: Compressing objects: 100% (95649/95649), done.
+remote: Total 402668 (delta 300219), reused 402581 (delta 300139)
+Receiving objects: 100% (402668/402668), 145.39 MiB | 518.00 KiB/s, done.
+Resolving deltas: 100% (300219/300219), done.
+akash@akash-HP-Pavilion-15-Notebook-PC:~/rpi/sources$ git clone -b krogoth git://git.openembedded.org/meta-openembedded
+Cloning into 'meta-openembedded'...
+remote: Counting objects: 91602, done.
+remote: Compressing objects: 100% (30515/30515), done.
+remote: Total 91602 (delta 56552), reused 91285 (delta 56352)
+Receiving objects: 100% (91602/91602), 28.81 MiB | 563.00 KiB/s, done.
+Resolving deltas: 100% (56552/56552), done.
+akash@akash-HP-Pavilion-15-Notebook-PC:~/rpi/sources$ git clone -b krogoth git://git.yoctoproject.org/meta-raspberrypi
+Cloning into 'meta-raspberrypi'...
+remote: Counting objects: 5162, done.
+remote: Compressing objects: 100% (2235/2235), done.
+remote: Total 5162 (delta 2690), reused 5026 (delta 2614)
+Receiving objects: 100% (5162/5162), 1.28 MiB | 205.00 KiB/s, done.
+Resolving deltas: 100% (2690/2690), done.
+akash@akash-HP-Pavilion-15-Notebook-PC:~/rpi/sources$ cd ~/rpi/
+akash@akash-HP-Pavilion-15-Notebook-PC:~/rpi$ source sources/poky/oe-init-build-env rpi-build
+You had no conf/local.conf file. This configuration file has therefore been
+created for you with some default values. You may wish to edit it to, for
+example, select a different MACHINE (target hardware). See conf/local.conf
+for more information as common configuration options are commented.
+
+You had no conf/bblayers.conf file. This configuration file has therefore been
+created for you with some default values. To add additional metadata layers
+into your configuration please add entries to conf/bblayers.conf.
+
+The Yocto Project has extensive documentation about OE including a reference
+manual which can be found at:
+    http://yoctoproject.org/documentation
+
+For more information about OpenEmbedded see their website:
+    http://www.openembedded.org/
+
+
+### Shell environment set up for builds. ###
+
+You can now run 'bitbake <target>'
+
+Common targets are:
+    core-image-minimal
+    core-image-sato
+    meta-toolchain
+    meta-ide-support
+
+You can also run generated qemu images with a command like 'runqemu qemux86'
+akash@akash-HP-Pavilion-15-Notebook-PC:~/rpi/rpi-build$ echo 'MACHINE = "raspberrypi3"' >> conf/local.conf
+akash@akash-HP-Pavilion-15-Notebook-PC:~/rpi/rpi-build$ echo 'PREFERRED_VERSION_linux-raspberrypi = "4.%"' >> conf/local.conf
+akash@akash-HP-Pavilion-15-Notebook-PC:~/rpi/rpi-build$ echo 'DISTRO_FEATURES_remove = "x11 wayland"' >> conf/local.conf
+akash@akash-HP-Pavilion-15-Notebook-PC:~/rpi/rpi-build$ echo 'DISTRO_FEATURES_append = " systemd"' >> conf/local.conf
+akash@akash-HP-Pavilion-15-Notebook-PC:~/rpi/rpi-build$ echo 'VIRTUAL-RUNTIME_init_manager = "systemd"' >> conf/local.conf
+akash@akash-HP-Pavilion-15-Notebook-PC:~/rpi/rpi-build$ vim conf/bblayers.conf
+akash@akash-HP-Pavilion-15-Notebook-PC:~/rpi/rpi-build$ bitbake rpi-basic-image
+WARNING: Host distribution "Ubuntu-16.04" has not been validated with this version of the build system; you may possibly experience unexpected failures. It is recommended that you use a tested distribution.
+Parsing recipes: 100% |#########################################| Time: 00:01:15
+Parsing of 1593 .bb files complete (0 cached, 1593 parsed). 2115 targets, 360 skipped, 0 masked, 0 errors.
+NOTE: Resolving any missing task queue dependencies
+
+Build Configuration:
+BB_VERSION        = "1.30.0"
+BUILD_SYS         = "x86_64-linux"
+NATIVELSBSTRING   = "Ubuntu-16.04"
+TARGET_SYS        = "arm-poky-linux-gnueabi"
+MACHINE           = "raspberrypi3"
+DISTRO            = "poky"
+DISTRO_VERSION    = "2.1.3"
+TUNE_FEATURES     = "arm armv7ve vfp thumb neon vfpv4 callconvention-hard cortexa7"
+TARGET_FPU        = "hard"
+meta              
+meta-poky         
+meta-yocto-bsp    = "krogoth:444dc2e99b3c3967d9f83380c34bb99077a6ffa8"
+meta-oe           
+meta-multimedia   = "krogoth:55c8a76da5dc099a7bc3838495c672140cedb78e"
+meta-raspberrypi  = "krogoth:a5f9b07a820d50ae5fb62e07306cd4e72d8638a9"
+
+NOTE: Fetching uninative binary shim from http://downloads.yoctoproject.org/releases/uninative/1.0.1/x86_64-nativesdk-libc.tar.bz2;sha256sum=acf1e44a0ac2e855e81da6426197d36358bf7b4e88e552ef933128498c8910f8
+NOTE: Preparing RunQueue
+NOTE: Executing SetScene Tasks
+NOTE: Executing RunQueue Tasks
+WARNING: libmpc-native-1.0.3-r0 do_fetch: Failed to fetch URL http://www.multiprecision.org/mpc/download/mpc-1.0.3.tar.gz, attempting MIRRORS if available
+WARNING: byacc-native-20150711-r0 do_fetch: Failed to fetch URL ftp://invisible-island.net/byacc/byacc-20150711.tgz, attempting MIRRORS if available
+WARNING: shadow-native-4.2.1-r0 do_fetch: Failed to fetch URL http://pkg-shadow.alioth.debian.org/releases/shadow-4.2.1.tar.xz, attempting MIRRORS if available
+WARNING: bash-completion-2.1-r0 do_fetch: Failed to fetch URL http://bash-completion.alioth.debian.org/files/bash-completion-2.1.tar.bz2, attempting MIRRORS if available
+WARNING: coreutils-8.25-r0 do_fetch: Failed to fetch URL http://distfiles.gentoo.org/distfiles/coreutils-8.25-man.tar.xz;name=manpages, attempting MIRRORS if available
+WARNING: python-setuptools-19.4-r0 do_fetch: Failed to fetch URL http://pypi.python.org/packages/source/s/setuptools/setuptools-19.4.tar.gz, attempting MIRRORS if available
+NOTE: Tasks Summary: Attempted 2176 tasks of which 10 didn't need to be rerun and all succeeded.
+
+Summary: There were 7 WARNING messages shown.
+akash@akash-HP-Pavilion-15-Notebook-PC:~/rpi/rpi-build$ 
+
+#code for configuration in bblayers
+ POKY_BBLAYERS_CONF_VERSION is increased each time build/conf/bblayers.conf
+# changes incompatibly
+POKY_BBLAYERS_CONF_VERSION = "2"
+
+BBPATH = "${TOPDIR}"
+BBFILES ?= ""
+
+BSPDIR := "/home/akash/rpi/"
+
+BBLAYERS ?= " \
+  ${BSPDIR}/sources/poky/meta \
+  ${BSPDIR}/sources/poky/meta-poky \
+  ${BSPDIR}/sources/poky/meta-yocto-bsp \
+  ${BSPDIR}/sources/meta-openembedded/meta-oe \
+  ${BSPDIR}/sources/meta-openembedded/meta-multimedia \
+  ${BSPDIR}/sources/meta-raspberrypi \
+  "
+BBLAYERS_NON_REMOVABLE ?= " \
+  ${BSPDIR}/sources/poky/meta \
+  ${BSPDIR}/sources/poky/meta-poky \
+  "
+~                                                                               
+~                             
+
+
+
